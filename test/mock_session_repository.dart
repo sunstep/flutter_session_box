@@ -1,6 +1,6 @@
 import 'package:user_session_manager/src/domain/i_user_session_repository.dart';
 
-class MockSessionRepository<T> implements IUserSessionRepository<T> {
+class InMemorySessionRepository<T> implements IUserSessionRepository<T> {
   T? _user;
 
   @override

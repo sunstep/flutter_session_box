@@ -12,7 +12,7 @@ void main() {
     late UserSessionManager<FakeUser> sessionManager;
 
     setUp(() async {
-      final repo = MockSessionRepository<FakeUser>();
+      final repo = InMemorySessionRepository<FakeUser>();
       final service = UserSessionService.forTesting(repo);
       sessionManager = UserSessionManager.forTesting(service);
     });

@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:user_session_manager/src/data/secure_storage_session_manager.dart';
 import 'package:user_session_manager/src/data/shared_prefs_session_manager.dart';
@@ -44,7 +43,10 @@ class UserSessionService<T> {
   Future<bool> isLoggedIn() async => (await getUser()) != null;
 
   static ToJson<T> _resolveToJson<T>(ToJson<T>? provided) {
-    if (provided != null) return provided;
+
+    if (provided != null) {
+      return provided;
+    }
 
     return (value) {
       if (value is int || value is double || value is bool || value is String) {
@@ -52,10 +54,14 @@ class UserSessionService<T> {
       }
       throw UnsupportedError('Missing toJson for type $T');
     };
+
   }
 
   static FromJson<T> _resolveFromJson<T>(FromJson<T>? provided) {
-    if (provided != null) return provided;
+
+    if (provided != null) {
+      return provided;
+    }
 
     return (json) {
       final value = json['value'];
@@ -65,5 +71,6 @@ class UserSessionService<T> {
       if (T == String) return value as T;
       throw UnsupportedError('Missing fromJson for type $T');
     };
+
   }
 }
