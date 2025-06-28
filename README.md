@@ -17,6 +17,8 @@ A clean, lightweight, and testable Dart package for securely managing user sessi
 
 Designed with SOLID principles and clean architecture, it supports both primitive types (like `String`, `int`) and custom objects using JSON serialization.
 
+This is just functionality that I wrote for my own app. I felt like that the functionality should have been provided by an existing package, but there was none.
+
 ---
 
 ## ✨ Features
@@ -105,8 +107,6 @@ final repo = InMemorySessionRepository<User>();
 final service = UserSessionService.forTesting(repo);
 final session = UserSessionManager.forTesting(service);
 ```
-
-> No storage or mocking needed — ideal for unit tests.
 
 ---
 
