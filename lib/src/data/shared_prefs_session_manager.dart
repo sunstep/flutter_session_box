@@ -8,7 +8,7 @@ import 'package:user_session_manager/src/domain/typedefs.dart';
 
 class SharedPrefsSessionRepository<T> implements IUserSessionRepository<T> {
 
-  final SharedPreferencesWithCache _prefs;
+  final SharedPreferencesAsync _prefs;
   final ToJson<T> toJson;
   final FromJson<T> fromJson;
 
@@ -18,9 +18,7 @@ class SharedPrefsSessionRepository<T> implements IUserSessionRepository<T> {
     required ToJson<T> toJson,
     required FromJson<T> fromJson,
   }) async {
-    final prefs = await SharedPreferencesWithCache.create(
-        cacheOptions: SharedPreferencesWithCacheOptions()
-    );
+    final prefs = SharedPreferencesAsync();
     return SharedPrefsSessionRepository._(prefs, toJson, fromJson);
   }
 
@@ -33,7 +31,7 @@ class SharedPrefsSessionRepository<T> implements IUserSessionRepository<T> {
   @override
   Future<T?> read() async {
 
-    final json = _prefs.getString(UserSessionManagerKey.userSession);
+    final json = await _prefs.getString(UserSessionManagerKey.userSession);
 
     if (json == null) {
       return null;
