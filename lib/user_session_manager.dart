@@ -4,9 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:user_session_manager/src/application/user_session_service.dart';
 import 'package:user_session_manager/src/domain/typedefs.dart';
 
-export 'src/domain/typedefs.dart';
-export 'src/domain/i_user_session_repository.dart';
-
 class UserSessionManager<T> {
   final UserSessionService<T> _service;
   UserSessionManager._(this._service);
