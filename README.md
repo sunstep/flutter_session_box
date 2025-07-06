@@ -172,8 +172,18 @@ final session = UserSessionManager.forTesting(service);
 
 ## 🛡️ Security
 
-- When `encrypt: true`, session data is stored via `flutter_secure_storage`
-- ❗ Do not store sensitive data like raw passwords
+- When encrypt: true, session data is stored securely using flutter_secure_storage
+
+- ✅ Ideal for storing auth tokens, user identity, or small session payloads
+
+- ❗ Do not store sensitive data like raw passwords or biometric data
+
+- 🧠 User ID safety:
+SessionBox never persists userId, it's stored in memory only.
+You are encouraged to resolve the ID from your database on app startup (e.g. by email or username) before using it.
+This avoids relying on potentially stale IDs after DB resets or migrations.
+
+
 
 ---
 
