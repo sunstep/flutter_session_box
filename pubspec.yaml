@@ -1,6 +1,6 @@
-name: user_session_manager
+name: session_box
 description: "A Flutter package that allows you store your currently logged in user for quick access"
-version: 0.0.3
+version: 0.0.8
 homepage:
 
 environment:
