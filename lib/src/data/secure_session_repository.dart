@@ -2,9 +2,9 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:user_session_manager/src/data/session_key.dart';
-import 'package:user_session_manager/src/domain/i_user_session_repository.dart';
-import 'package:user_session_manager/src/domain/typedefs.dart';
+import 'package:session_box/src/data/session_key.dart';
+import 'package:session_box/src/domain/i_user_session_repository.dart';
+import 'package:session_box/src/domain/typedefs.dart';
 
 class SecureSessionRepository<T> implements IUserSessionRepository<T> {
 
@@ -23,13 +23,13 @@ class SecureSessionRepository<T> implements IUserSessionRepository<T> {
   }
 
   @override
-  Future<void> save(T user) async {
+  Future<void> saveUser(T user) async {
     final json = jsonEncode(toJson(user));
     await _storage.write(key: UserSessionManagerKey.userSession, value: json);
   }
 
   @override
-  Future<T?> read() async {
+  Future<T?> getUser() async {
     final json = await _storage.read(key: UserSessionManagerKey.userSession);
     if (json == null) return null;
     return fromJson(jsonDecode(json));

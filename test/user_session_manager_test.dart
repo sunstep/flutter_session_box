@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:user_session_manager/src/application/user_session_service.dart';
-import 'package:user_session_manager/user_session_manager.dart';
+import 'package:session_box/src/application/user_session_service.dart';
+import 'package:session_box/session_box.dart';
 
 import 'fake_user.dart';
 import 'mock_session_repository.dart';
@@ -9,16 +9,16 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('UserSessionManager (in-memory)', () {
-    late UserSessionManager<FakeUser> sessionManager;
+    late SessionBox<FakeUser> sessionManager;
 
     setUp(() async {
       final repo = InMemorySessionRepository<FakeUser>();
       final service = UserSessionService.forTesting(repo);
-      sessionManager = UserSessionManager.forTesting(service);
+      sessionManager = SessionBox.forTesting(service);
     });
 
     test('Initially not logged in', () async {
-      expect(await sessionManager.isLoggedIn(), isFalse);
+      expect(await sessionManager.refreshSession(), isFalse);
     });
 
     test('Login + Get', () async {
