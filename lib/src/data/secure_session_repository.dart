@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -7,7 +6,6 @@ import 'package:session_box/src/domain/i_user_session_repository.dart';
 import 'package:session_box/src/domain/typedefs.dart';
 
 class SecureSessionRepository<T> implements IUserSessionRepository<T> {
-
   final FlutterSecureStorage _storage;
   final ToJson<T> toJson;
   final FromJson<T> fromJson;
@@ -19,7 +17,10 @@ class SecureSessionRepository<T> implements IUserSessionRepository<T> {
     required FromJson<T> fromJson,
   }) async {
     return SecureSessionRepository._(
-        const FlutterSecureStorage(), toJson, fromJson);
+      const FlutterSecureStorage(),
+      toJson,
+      fromJson,
+    );
   }
 
   @override

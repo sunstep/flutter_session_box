@@ -14,16 +14,16 @@ class SessionBox<T> {
   }
 
   static Future<SessionBox<T>> create<T>({
-     ToJson<T>? toJson,
-     FromJson<T>? fromJson,
+    ToJson<T>? toJson,
+    FromJson<T>? fromJson,
     bool encrypt = false,
-    Future<bool> Function(T user)? isValidUser
+    Future<bool> Function(T user)? isValidUser,
   }) async {
     final UserSessionService<T> service = await UserSessionService.create(
       toJson: toJson,
       fromJson: fromJson,
       encrypt: encrypt,
-      isValidUser: isValidUser
+      isValidUser: isValidUser,
     );
     return SessionBox._(service);
   }
@@ -35,5 +35,4 @@ class SessionBox<T> {
   void setUserId(int userId) => _service.setSessionUserId(userId);
   int? getUserId() => _service.getSessionUserId();
   bool get hasUserId => _service.hasSessionUserId();
-
 }

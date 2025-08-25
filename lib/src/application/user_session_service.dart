@@ -5,7 +5,6 @@ import 'package:session_box/src/domain/i_user_session_repository.dart';
 import 'package:session_box/src/domain/typedefs.dart';
 
 class UserSessionService<T> {
-
   final Future<bool> Function(T user)? _isValidUserAsync;
   int? _userId;
 
@@ -21,22 +20,24 @@ class UserSessionService<T> {
     ToJson<T>? toJson,
     FromJson<T>? fromJson,
     bool encrypt = false,
-    Future<bool> Function(T user)? isValidUser
+    Future<bool> Function(T user)? isValidUser,
   }) async {
     final toJsonFn = _resolveToJson<T>(toJson);
     final fromJsonFn = _resolveFromJson<T>(fromJson);
 
     if (encrypt) {
-      final SecureSessionRepository<T> repo = await SecureSessionRepository.create(
-        toJson: toJsonFn,
-        fromJson: fromJsonFn
-      );
+      final SecureSessionRepository<T> repo =
+          await SecureSessionRepository.create(
+            toJson: toJsonFn,
+            fromJson: fromJsonFn,
+          );
       return UserSessionService._(repo);
     } else {
-      final SharedPrefsSessionRepository<T> repo = await SharedPrefsSessionRepository.create(
-        toJson: toJsonFn,
-        fromJson: fromJsonFn,
-      );
+      final SharedPrefsSessionRepository<T> repo =
+          await SharedPrefsSessionRepository.create(
+            toJson: toJsonFn,
+            fromJson: fromJsonFn,
+          );
       return UserSessionService._(repo, isValidUser);
     }
   }
@@ -63,7 +64,6 @@ class UserSessionService<T> {
   }
 
   Future<T?> refreshSession() async {
-
     final T? user = await getUser();
 
     // User null: returns null, user not null validates the user, and if the user is not valid anymore, also return null;
@@ -81,7 +81,6 @@ class UserSessionService<T> {
   }
 
   static ToJson<T> _resolveToJson<T>(ToJson<T>? provided) {
-
     if (provided != null) {
       return provided;
     }
@@ -92,11 +91,9 @@ class UserSessionService<T> {
       }
       throw UnsupportedError('Missing toJson for type $T');
     };
-
   }
 
   static FromJson<T> _resolveFromJson<T>(FromJson<T>? provided) {
-
     if (provided != null) {
       return provided;
     }
@@ -109,6 +106,5 @@ class UserSessionService<T> {
       if (T == String) return value as T;
       throw UnsupportedError('Missing fromJson for type $T');
     };
-
   }
 }

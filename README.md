@@ -39,7 +39,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  session_box: ^1.0.0
+  session_box: ^1.0.2
 ```
 
 Then run:
