@@ -48,8 +48,6 @@ Then run:
 flutter pub get
 ```
 
-> ✨ Will be available on pub.dev soon!
-
 ---
 
 ## 🚀 Getting Started
