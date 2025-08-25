@@ -6,7 +6,6 @@ import 'package:session_box/src/domain/i_user_session_repository.dart';
 import 'package:session_box/src/domain/typedefs.dart';
 
 class SharedPrefsSessionRepository<T> implements IUserSessionRepository<T> {
-
   final SharedPreferencesAsync _prefs;
   final ToJson<T> toJson;
   final FromJson<T> fromJson;
@@ -28,18 +27,14 @@ class SharedPrefsSessionRepository<T> implements IUserSessionRepository<T> {
   }
 
   @override
-
-
   @override
   Future<T?> getUser() async {
-
     final json = await _prefs.getString(UserSessionManagerKey.userSession);
 
     if (json == null) {
       return null;
     }
-      return fromJson(jsonDecode(json));
-
+    return fromJson(jsonDecode(json));
   }
 
   @override
