@@ -200,4 +200,4 @@ lib/
 
 ## 📜 License
 
-MIT License. See [LICENSE](LICENSE) for details.
+BSD 3-Clause "New" or "Revised" License. See [LICENSE](LICENSE) for details.
