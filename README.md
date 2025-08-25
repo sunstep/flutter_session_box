@@ -29,7 +29,7 @@ This is just functionality that I wrote for my own app. I am making it available
 - Fully testable with in-memory mock repository
 - Easy to integrate into any Dart or Flutter app
 - No DB dependency required for login state
-- Forces you to refresh your user id if you make use of ther user id functionality
+- Forces you to refresh your user id if you make use of the user id functionality
 
 ---
 
