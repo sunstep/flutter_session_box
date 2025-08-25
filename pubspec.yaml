@@ -1,6 +1,6 @@
 name: session_box
 description: "A Flutter package that allows you store your currently logged in user for quick access"
-version: 1.0.0
+version: 1.0.1
 homepage: "https://dawarich-android.app"
 repository: "https://github.com/sunstep/flutter_session_box"
 issue_tracker: "https://github.com/sunstep/flutter_session_box/issues"
