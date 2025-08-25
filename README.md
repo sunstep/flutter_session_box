@@ -39,7 +39,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  session_box: ^1.0.2
+  session_box: ^1.0.3
 ```
 
 Then run:
@@ -94,10 +94,16 @@ class User {
 }
 
 // Create the session manager
-final session = await UserSessionManager.create<User>(
+final session = await SessionBox.create<User>(
   encrypt: true,
-  toJson: (u) => u.toJson(),
+  toJson: (user) => user.toJson(),
   fromJson: (json) => User.fromJson(json),
+
+  // Optional: validate the user on app startup
+  isValidUser: (user) async {
+    final exists = await authService.isValidUser(user.email);
+    return exists;
+  },
 );
 
 // On login
@@ -140,15 +146,16 @@ final session = UserSessionManager.forTesting(service);
 
 ### `SessionBox<T>`
 
-| Method                  | Description                                                  |
-| ----------------------- | ------------------------------------------------------------ |
-| `login(T user)`         | Saves the session (persists the full user object)            |
-| `isLoggedIn()`          | Returns `true` if a session is currently stored              |
-| `getUser()`             | Retrieves the stored user object or `null`                   |
-| `logout()`              | Clears the session and resets in-memory state                |
-| `setUserId(int userId)` | Caches the user’s database ID **in memory only**             |
-| `getUserId()`           | Returns the in-memory user ID (`int?`), or `null` if not set |
-| `hasUserId`             | Returns `true` if a user ID has been set in memory           |
+| Member / Method                                                                                                                                                                                      | Description                                                                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `static Future<SessionBox<T>> create<T>({ToJson<T>? toJson, FromJson<T>? fromJson, bool encrypt = false, Future<bool> Function(T user)? isValidUser})` | Factory to create a session box.            |                                                                                                                                                                              |
+| `Future<void> login(T user)`                                                                                                                                                                         | Persists the full user object                                                                                                                                                |
+| `Future<T?> getUser()`                                                                                                                                                                               | Gets the persisted user object, or `null` if none. Useful if you need fields from the stored user (e.g., email).                                                             |
+| `Future<T?> refreshSession()`                                                                                                                                                                        | Re-reads the stored user and (if `isValidUser` is set) validates it. Returns the valid user or `null` if invalid.                                                            |
+| `Future<void> logout()`                                                                                                                                                                              | Clears the persisted user and in‑memory userId.                                                                                                                              |
+| `Future<void> setUserId(int userId)`                                                                                                                                                                 | Sets an **in‑memory only** user id (not persisted). Most apps don’t need to call this directly.                                                                              |
+| `int? getUserId()`                                                                                                                                                                                   | Returns the in‑memory user id (or `null` if not set). Typically becomes available after your app resolves the real DB user using info from `getUser()` / `refreshSession()`. |
+| `bool get hasUserId`                                                                                                                                                                                 | `true` if an in‑memory user id is set.                                                                                                                                       |
 
 
 
