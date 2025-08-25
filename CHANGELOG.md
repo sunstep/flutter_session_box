@@ -14,3 +14,6 @@
 - Update example in readme
 - Update API docs in readme
 - Add docblocks to API methods
+
+## 1.0.4 - 2025-08-25
+- Fix inconsistency in readme API (getUser does not resolve user id)
