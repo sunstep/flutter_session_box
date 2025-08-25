@@ -1,13 +1,16 @@
 import 'package:flutter/foundation.dart';
-import 'package:user_session_manager/src/data/secure_storage_session_manager.dart';
-import 'package:user_session_manager/src/data/shared_prefs_session_manager.dart';
-import 'package:user_session_manager/src/domain/i_user_session_repository.dart';
-import 'package:user_session_manager/src/domain/typedefs.dart';
+import 'package:session_box/src/data/secure_session_repository.dart';
+import 'package:session_box/src/data/shared_prefs_session_repository.dart';
+import 'package:session_box/src/domain/i_user_session_repository.dart';
+import 'package:session_box/src/domain/typedefs.dart';
 
 class UserSessionService<T> {
 
+  final Future<bool> Function(T user)? _isValidUserAsync;
+  int? _userId;
+
   final IUserSessionRepository<T> _repository;
-  UserSessionService._(this._repository);
+  UserSessionService._(this._repository, [this._isValidUserAsync]);
 
   @visibleForTesting
   factory UserSessionService.forTesting(IUserSessionRepository<T> repository) {
@@ -18,6 +21,7 @@ class UserSessionService<T> {
     ToJson<T>? toJson,
     FromJson<T>? fromJson,
     bool encrypt = false,
+    Future<bool> Function(T user)? isValidUser
   }) async {
     final toJsonFn = _resolveToJson<T>(toJson);
     final fromJsonFn = _resolveFromJson<T>(fromJson);
@@ -25,7 +29,7 @@ class UserSessionService<T> {
     if (encrypt) {
       final SecureSessionRepository<T> repo = await SecureSessionRepository.create(
         toJson: toJsonFn,
-        fromJson: fromJsonFn,
+        fromJson: fromJsonFn
       );
       return UserSessionService._(repo);
     } else {
@@ -33,14 +37,48 @@ class UserSessionService<T> {
         toJson: toJsonFn,
         fromJson: fromJsonFn,
       );
-      return UserSessionService._(repo);
+      return UserSessionService._(repo, isValidUser);
     }
   }
 
-  Future<void> login(T user) => _repository.save(user);
-  Future<void> logout() => _repository.clear();
-  Future<T?> getUser() => _repository.read();
-  Future<bool> isLoggedIn() async => (await getUser()) != null;
+  Future<void> login(T user) async {
+    await _repository.saveUser(user);
+  }
+
+  void setSessionUserId(int userId) {
+    _userId = userId;
+  }
+
+  Future<void> logout() async {
+    _repository.clear();
+    _userId = null;
+  }
+
+  Future<T?> getUser() async {
+    return await _repository.getUser();
+  }
+
+  int? getSessionUserId() {
+    return _userId;
+  }
+
+  Future<T?> refreshSession() async {
+
+    final T? user = await getUser();
+
+    // User null: returns null, user not null validates the user, and if the user is not valid anymore, also return null;
+    if (user != null) {
+      if (_isValidUserAsync != null && !await _isValidUserAsync(user)) {
+        return null; //
+      }
+    }
+
+    return user;
+  }
+
+  bool hasSessionUserId() {
+    return _userId != null;
+  }
 
   static ToJson<T> _resolveToJson<T>(ToJson<T>? provided) {
 

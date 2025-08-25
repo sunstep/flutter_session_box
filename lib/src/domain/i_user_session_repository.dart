@@ -1,7 +1,7 @@
 
 abstract interface class IUserSessionRepository<T> {
 
-  Future<void> save(T user);
-  Future<T?> read();
+  Future<void> saveUser(T user);
+  Future<T?> getUser();
   Future<void> clear();
 }
