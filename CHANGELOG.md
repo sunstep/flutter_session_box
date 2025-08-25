@@ -13,4 +13,4 @@
 ## 1.0.3 - 2025-08-25
 - Update example in readme
 - Update API docs in readme
-- Add doc blocks to API methods
+- Add docblocks to API methods
