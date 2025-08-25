@@ -9,3 +9,8 @@
 ## 1.0.2 - 2025-08-25
 - Fix typo in read me
 - Show proper version in installation instructions (readme)
+
+## 1.0.3 - 2025-08-25
+- Update example in readme
+- Update API docs in readme
+- Add doc blocks to API methods
