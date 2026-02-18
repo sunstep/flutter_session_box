@@ -77,7 +77,8 @@ class UserSessionService<T> {
   }
 
   bool hasSessionUserId() {
-    return _userId != null;
+    final id = getSessionUserId();
+    return id != null;
   }
 
   static ToJson<T> _resolveToJson<T>(ToJson<T>? provided) {
