@@ -18,7 +18,7 @@ void main() {
     });
 
     test('Initially not logged in', () async {
-      expect(await sessionManager.refreshSession(), isFalse);
+      expect(await sessionManager.refreshSession(), isNull);
     });
 
     test('Login + Get', () async {
