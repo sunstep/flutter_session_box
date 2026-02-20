@@ -11,6 +11,17 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
 
+> ## ⚠️ Discontinued / No longer maintained
+> This package is **discontinued** and is **no longer actively maintained**.
+>
+> - ✅ You can still use it as-is, but **no new features or fixes are planned**.
+> - 🧩 If you depend on it, consider **forking** this repository and maintaining your own version.
+> - 🔒 For secure key/value storage alternatives, look at:
+    >   - `flutter_secure_storage` (secure storage)
+>   - `shared_preferences` (non-secure storage)
+>
+> Last published: **v1.0.5**.
+
 # 🗝️ Session Box for Flutter
 
 A clean, lightweight, and testable Dart package for securely managing user session data across app restarts using `SharedPreferences` or `flutter_secure_storage`.
@@ -39,7 +50,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  session_box: ^1.0.4
+  session_box: ^1.0.5
 ```
 
 Then run:
