@@ -17,3 +17,6 @@
 
 ## 1.0.4 - 2025-08-25
 - Fix inconsistency in readme API (getUser does not resolve user id)
+
+## 1.0.5 - 2026-02-20
+- Bump dependencies and add discontinue message
